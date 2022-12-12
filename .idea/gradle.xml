@@ -10,8 +10,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ejemploasynctask" />
-            <option value="$PROJECT_DIR$/ejemplothread" />
+            <option value="$PROJECT_DIR$/handlerbasic" />
+            <option value="$PROJECT_DIR$/handlersplash" />
+            <option value="$PROJECT_DIR$/threadingandroidasynctask" />
+            <option value="$PROJECT_DIR$/threadingandroidasynctask/pelota" />
+            <option value="$PROJECT_DIR$/threadingandroidhandler" />
+            <option value="$PROJECT_DIR$/threadingandroidhandlerthread" />
+            <option value="$PROJECT_DIR$/threadingandroidthread" />
           </set>
         </option>
       </GradleProjectSettings>

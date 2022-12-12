@@ -13,5 +13,10 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Ejemplos PMDM"
-include ':ejemplothread'
-include ':ejemploasynctask'
+include ':threadingandroidthread'
+include ':threadingandroidasynctask'
+include ':threadingandroidhandler'
+include ':handlersplash'
+include ':handlerbasic'
+include ':threadingandroidhandlerthread'
+include ':threadingandroidasynctask:pelota'
