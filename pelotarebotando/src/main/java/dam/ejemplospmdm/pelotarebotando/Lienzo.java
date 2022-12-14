@@ -12,23 +12,25 @@ import androidx.annotation.NonNull;
 
 public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
 
-    SurfaceHolder holder;
+    private SurfaceHolder holder;
+    private Juego juego;
 
-    Bitmap bmp;
-    Bitmap bmpLandscape;
-    Bitmap bmpPortrait;
-    Canvas canvas;
-    Canvas canvasLandscape;
-    Canvas canvasPortrait;
+    private Bitmap bmp;
+    private Bitmap bmpLandscape;
+    private Bitmap bmpPortrait;
+    private Canvas canvas;
+    private Canvas canvasLandscape;
+    private Canvas canvasPortrait;
 
     public Lienzo(Context context) {
         super(context);
+        getHolder().addCallback(this);
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         holder = getHolder();
-//        iniciar juego
+        juego = new Juego(this);
     }
 
     @Override
@@ -52,14 +54,19 @@ public class Lienzo extends SurfaceView implements SurfaceHolder.Callback {
                 bmp = bmpLandscape;
                 canvas = canvasLandscape;
         }
+        juego.comenzar();
     }
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-
+        juego.detener();
     }
 
-    private void render() {
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void render() {
         Canvas canvas = null;
         try {
             canvas = holder.lockCanvas();

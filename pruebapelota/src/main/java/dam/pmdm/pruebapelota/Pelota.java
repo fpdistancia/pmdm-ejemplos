@@ -1,11 +1,11 @@
-package dam.ejemplospmdm.pelotarebotando;
+package dam.pmdm.pruebapelota;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Pelota {
 
+    private Juego juego;
     private float radio;
     private float x;
     private float y;
@@ -13,7 +13,8 @@ public class Pelota {
     private float vy;
     private Paint paint;
 
-    public Pelota (float radio, float x, float y, float velocidad, float direccion, int color) {
+    public Pelota (Juego juego, float radio, float x, float y, float velocidad, float direccion, int color) {
+        this.juego = juego;
         this.radio = radio;
         this.x = x;
         this.y = y;

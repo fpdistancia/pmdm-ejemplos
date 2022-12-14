@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    Lienzo lienzo;
+    private Lienzo lienzo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(lienzo = new Lienzo(this));
     }
 
@@ -30,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        // detener juego
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
