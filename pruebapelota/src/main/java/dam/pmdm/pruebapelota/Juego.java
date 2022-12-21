@@ -20,7 +20,7 @@ public class Juego implements Runnable {
     private Paint paint;
 
     public Juego() {
-        pelota = new Pelota(this, 50, 50, 50, 50f, (float) Math.PI /4f, Color.RED);
+        pelota = new Pelota(this, 50, 50, 50, 150f, (float) Math.PI /4f, Color.RED);
         paint = new Paint(Color.BLACK);
         paint.setStyle(Paint.Style.FILL);
     }
@@ -45,6 +45,7 @@ public class Juego implements Runnable {
         fin = true;
         if (suspendido)
             reanudar();
+        try { thread.join(); } catch (InterruptedException e) { e.printStackTrace(); }
     }
 
     public synchronized void suspender() {

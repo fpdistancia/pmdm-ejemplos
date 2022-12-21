@@ -28,6 +28,26 @@ public class Pelota {
     public void mover(long lapso) {
         x += lapso * vx / 1000000000f;
         y += lapso * vy / 1000000000f;
+        double xl = x - radio;
+        double xr = x + radio;
+        double ys = y - radio;
+        double yi = y + radio;
+        if (xl < 0) {
+            x -= 2 * xl;
+            vx = -vx;
+        }
+        else if (xr > juego.getW()) {
+            x -= 2 * (xr - juego.getW());
+            vx = -vx;
+        }
+        else if (ys < 0) {
+            y -= 2 * ys;
+            vy = -vy;
+        }
+        else if (yi > juego.getH()) {
+            y -= 2 * (yi - juego.getH());
+            vy = -vy;
+        }
     }
 
     public void dibujar(Canvas canvas) {
