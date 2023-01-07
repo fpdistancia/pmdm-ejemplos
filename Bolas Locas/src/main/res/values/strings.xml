@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PelotaRebotando</string>
+
+    <string-array name="instrucciones">
+        <item>Toca la bola que se desplaza por encima de todas las demás para eliminarla.</item>
+        <item>Cada vez que falles se añadirá una bola más al juego.</item>
+        <item>Perderás si el número de bolas añadidas supera el 10% de las iniciales.</item>
+        <item>Elimina todas las bolas lo más rapido que puedas.</item>
+        <item>TOCA LA PANTALLA PARA RETORNAR</item>
+    </string-array>
+
+    <string-array name="inicioPartida">
+        <item>ELIMINA %d BOLAS</item>
+        <item>TOCA LA PANTALLA PARA COMENZAR</item>
+    </string-array>
+</resources>
