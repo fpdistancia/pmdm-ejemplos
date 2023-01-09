@@ -120,8 +120,7 @@ public class Juego extends Escena {
     }
 
     @Override
-    public void actualizar(int format, int ancho, int alto) {
-
+    public void actualizar() {
     }
 
     @Override

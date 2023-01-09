@@ -21,6 +21,9 @@ public class Inicio extends Escena {
 
     private int dificultad = 50;
 
+    private final Typeface TYPEFACE1;
+    private final Typeface TYPEFACE2;
+
     private Bitmap titulo;
     private float tx;
     private float ty;
@@ -45,46 +48,8 @@ public class Inicio extends Escena {
 
     public Inicio(Escenario escenario, String nombre, boolean inicial) {
         super(escenario, nombre, inicial);
-        try {
-            final Typeface TYPEFACE1 = Typeface.createFromAsset(escenario.getContext().getAssets(), "fuentes/ThunderLord.ttf");
-            final Typeface TYPEFACE2 = Typeface.createFromAsset(escenario.getContext().getAssets(), "fuentes/ComicNeueSansID.ttf");
-
-            titulo = Texto.crearAncho("Bolas Locas", TYPEFACE1, escenario.getWidth() * .7f);
-            tx = (escenario.getWidth() - titulo.getWidth()) / 2f;
-            ty = escenario.getHeight() * .07f;
-
-            float resto = escenario.getHeight() - (ty + titulo.getHeight());
-            float sepBotones = resto * .1f;
-            float altoBotones = (resto - (sepBotones * 5f)) / 4f;
-            float by = ty + titulo.getHeight() + sepBotones;
-
-            Bitmap bmp = Texto.crearBotonDeAlto("FACIL", TYPEFACE2, altoBotones, Color.RED);
-            botonFacil = new Boton(bmp, (escenario.getWidth() - bmp.getWidth()) / 2f, by);
-            bmp = Texto.crearBotonDeAlto("MEDIO", TYPEFACE2, altoBotones, Color.RED);
-            botonMedio = new Boton(bmp, (escenario.getWidth() - bmp.getWidth()) / 2f, by + sepBotones + altoBotones);
-            bmp = Texto.crearBotonDeAlto("DIFICIL", TYPEFACE2, altoBotones, Color.RED);
-            botonDificil = new Boton(bmp, (escenario.getWidth() - bmp.getWidth()) / 2f, by + (2 * sepBotones) + (2 * altoBotones));
-            bmp = Texto.crearBotonDeAlto("INSTRUCCIONES", TYPEFACE2, altoBotones, Color.RED);
-            botonInstrucciones = new Boton(bmp, (escenario.getWidth() - bmp.getWidth()) / 2f, by + (3 * sepBotones) + (3 * altoBotones));
-
-            PAINT.setAntiAlias(true);
-            PAINT.setColor(Color.WHITE);
-            PAINT.setStyle(Paint.Style.FILL);
-
-            bola = SVG.getFromResource(escenario.getContext().getResources(), R.raw.bolaloca);
-            bola.setDocumentWidth(escenario.getHeight() * .5f);
-            bola.setDocumentHeight(escenario.getHeight() * .5f);
-
-            px = bola.getDocumentWidth() / 2f;
-            py = bola.getDocumentHeight() / 2f;
-
-            final float VLIN = px * (VANG * (float) Math.PI / 180f);
-            final float DIR = (float) Math.PI / 4f;
-            vx = (float) Math.cos(DIR) * VLIN;
-            vy = (float) Math.sin(DIR) * VLIN;
-        } catch (SVGParseException e) {
-            Log.e("MENU", e.getMessage());
-        }
+        TYPEFACE1 = Typeface.createFromAsset(escenario.getContext().getAssets(), "fuentes/ThunderLord.ttf");
+        TYPEFACE2 = Typeface.createFromAsset(escenario.getContext().getAssets(), "fuentes/ComicNeueSansID.ttf");
     }
 
     @Override
@@ -110,8 +75,8 @@ public class Inicio extends Escena {
                 rot *= -1;
 
         }
-        else if (dcha > escenario.getWidth()) {
-            dx -= 2 * (dcha - escenario.getWidth());
+        else if (dcha > width) {
+            dx -= 2 * (dcha - width);
             vx = -vx;
 
             if ((vy > 0 && rot > 0) || (vy < 0 && rot < 0))
@@ -126,8 +91,8 @@ public class Inicio extends Escena {
                 rot *= -1;
 
         }
-        else if (abajo > escenario.getHeight()) {
-            dy -= 2 * (abajo - escenario.getHeight());
+        else if (abajo > height) {
+            dy -= 2 * (abajo - height);
             vy = -vy;
 
             if ((vx < 0 && rot > 0) || (vx > 0 && rot < 0))
@@ -139,7 +104,7 @@ public class Inicio extends Escena {
 
     @Override
     public void dibujar(Canvas canvas) {
-        canvas.drawRect(0, 0, escenario.getWidth(), escenario.getHeight(), PAINT);
+        canvas.drawRect(0, 0, width, height, PAINT);
 //        canvas.drawColor(Color.WHITE);
 //        final DrawFilter filter = new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG| Paint.FILTER_BITMAP_FLAG | Paint.DITHER_FLAG, 0);
 //        canvas.setDrawFilter(filter);
@@ -165,8 +130,6 @@ public class Inicio extends Escena {
         escenario.setEscena("info", "giro");
     }
 
-
-
     @Override
     public void onTouch(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -185,8 +148,44 @@ public class Inicio extends Escena {
     }
 
     @Override
-    public void actualizar(int format, int ancho, int alto) {
+    public void actualizar() {
+        try {
+            titulo = Texto.crearAncho("Bolas Locas", TYPEFACE1, width * .7f);
+            tx = (width - titulo.getWidth()) / 2f;
+            ty = height * .07f;
 
+            float resto = height - (ty + titulo.getHeight());
+            float sepBotones = resto * .1f;
+            float altoBotones = (resto - (sepBotones * 5f)) / 4f;
+            float by = ty + titulo.getHeight() + sepBotones;
+
+            Bitmap bmp = Texto.crearBotonDeAlto("FACIL", TYPEFACE2, altoBotones, Color.RED);
+            botonFacil = new Boton(bmp, (width - bmp.getWidth()) / 2f, by);
+            bmp = Texto.crearBotonDeAlto("MEDIO", TYPEFACE2, altoBotones, Color.RED);
+            botonMedio = new Boton(bmp, (width - bmp.getWidth()) / 2f, by + sepBotones + altoBotones);
+            bmp = Texto.crearBotonDeAlto("DIFICIL", TYPEFACE2, altoBotones, Color.RED);
+            botonDificil = new Boton(bmp, (width - bmp.getWidth()) / 2f, by + (2 * sepBotones) + (2 * altoBotones));
+            bmp = Texto.crearBotonDeAlto("INSTRUCCIONES", TYPEFACE2, altoBotones, Color.RED);
+            botonInstrucciones = new Boton(bmp, (width - bmp.getWidth()) / 2f, by + (3 * sepBotones) + (3 * altoBotones));
+
+            PAINT.setAntiAlias(true);
+            PAINT.setColor(Color.WHITE);
+            PAINT.setStyle(Paint.Style.FILL);
+
+            bola = SVG.getFromResource(escenario.getContext().getResources(), R.raw.bolaloca);
+            bola.setDocumentWidth(height * .5f);
+            bola.setDocumentHeight(height * .5f);
+
+            px = bola.getDocumentWidth() / 2f;
+            py = bola.getDocumentHeight() / 2f;
+
+            final float VLIN = px * (VANG * (float) Math.PI / 180f);
+            final float DIR = (float) Math.PI / 4f;
+            vx = (float) Math.cos(DIR) * VLIN;
+            vy = (float) Math.sin(DIR) * VLIN;
+        } catch (SVGParseException e) {
+            Log.e("MENU", e.getMessage());
+        }
     }
 
     @Override

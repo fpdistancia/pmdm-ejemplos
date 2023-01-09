@@ -2,6 +2,7 @@ package dam.pmdm.bolaslocas.escenas;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import dam.pmdm.bolaslocas.Escenario;
@@ -10,6 +11,9 @@ public abstract  class Escena {
 
     protected final Escenario escenario;
     protected final String nombre;
+    private Integer format;
+    protected int width;
+    protected int height;
 
     public Escena(Escenario escenario, String nombre, boolean inicial) {
         this.escenario = escenario;
@@ -37,7 +41,17 @@ public abstract  class Escena {
 
     public abstract void onTouch(MotionEvent event);
 
-    public abstract void actualizar(int format, int ancho, int alto);
+    public abstract void actualizar();
+
+    public void surfaceChanged(int format, int width, int height) {
+        if (this.format == null || this.format != format || this.width != width || this.height != height) {
+            Log.i(String.format("Escena \"%s\"", nombre), "ACTUALIZADA");
+            this.format = format;
+            this.width = width;
+            this.height = height;
+            actualizar();
+        }
+    }
 
     public abstract boolean onBackPressed();
 

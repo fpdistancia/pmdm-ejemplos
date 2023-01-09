@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -21,8 +20,6 @@ import dam.pmdm.bolaslocas.transiciones.Transicion;
 
 public class Escenario extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener, Runnable {
 
-    private EscenarioCallback escenarioCallback;
-
     private final Map<String, Transicion> transiciones = new HashMap<>();
     private Transicion transicion;
 
@@ -32,13 +29,11 @@ public class Escenario extends SurfaceView implements SurfaceHolder.Callback, Vi
     private Thread gameLoop;
     private volatile boolean fin;
     private boolean pausado;
-    private boolean creado = false;
 
     private Escena inicial;
 
-    public Escenario(Context context, EscenarioCallback callback) {
+    public Escenario(Context context) {
         super(context);
-        this.escenarioCallback = callback;
         getHolder().addCallback(this);
         setOnTouchListener(this);
     }
@@ -46,9 +41,12 @@ public class Escenario extends SurfaceView implements SurfaceHolder.Callback, Vi
     public void addEscena(Escena escena, boolean inicial) {
         if (escenas.containsKey(escena.getNombre()))
             throw new InvalidParameterException(String.format("ya existe una escena llamada \"%s\"", escena.getNombre()));
-        escenas.put(escena.getNombre(), escena);
-        if (inicial)
+        if (inicial) {
+            if (this.inicial != null)
+                throw new InvalidParameterException(String.format("error añadiendo escena \"%s\" como escena inicial, ya existe una escena inicial llamada \"%s\"", escena.getNombre(), this.inicial.getNombre()));
             this.inicial = escena;
+        }
+        escenas.put(escena.getNombre(), escena);
     }
 
     public Escena getEscena(String nombre) {
@@ -102,15 +100,9 @@ public class Escenario extends SurfaceView implements SurfaceHolder.Callback, Vi
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int format, int width, int height) {
         Log.i("SURFACE", "CHANGED");
-
-        if (!creado) {
-            creado = true;
-            escenarioCallback.callback(this);
+        escenas.values().forEach(escena -> escena.surfaceChanged(format, width, height));
+        if (escena == null)
             escena = inicial;
-        }
-        else {
-            escenas.values().forEach(escena -> escena.actualizar(format, width, height));
-        }
         iniciarGameLoop();
     }
 

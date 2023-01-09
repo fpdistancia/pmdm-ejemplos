@@ -18,7 +18,7 @@ import dam.pmdm.bolaslocas.escenas.Tiempos;
 import dam.pmdm.bolaslocas.transiciones.Desplazamiento;
 import dam.pmdm.bolaslocas.transiciones.Giro;
 
-public class MainActivity extends AppCompatActivity implements EscenarioCallback {
+public class MainActivity extends AppCompatActivity {
 
     private Escenario escenario;
 
@@ -46,11 +46,7 @@ public class MainActivity extends AppCompatActivity implements EscenarioCallback
                     decorView.setSystemUiVisibility(flags);
             });
         }
-        setContentView(escenario = new Escenario(this, this));
-    }
-
-    @Override
-    public void callback(Escenario escenario) {
+        setContentView(escenario = new Escenario(this));
         new Inicio(escenario, "inicio", true);
         new Juego(escenario, "juego", false);
         new Info(escenario, "info", false);

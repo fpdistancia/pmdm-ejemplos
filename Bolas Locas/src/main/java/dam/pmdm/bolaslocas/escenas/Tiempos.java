@@ -22,17 +22,14 @@ public class Tiempos extends Escena {
 
     @Override
     public void dibujar(Canvas canvas) {
-
     }
 
     @Override
     public void onTouch(MotionEvent event) {
-
     }
 
     @Override
-    public void actualizar(int format, int ancho, int alto) {
-
+    public void actualizar() {
     }
 
     @Override
