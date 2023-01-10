@@ -9,18 +9,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import dam.pmdm.bolaslocas.escenas.Info;
-import dam.pmdm.bolaslocas.escenas.Juego;
-import dam.pmdm.bolaslocas.escenas.Inicio;
-import dam.pmdm.bolaslocas.escenas.Tiempos;
-import dam.pmdm.bolaslocas.transiciones.Desplazamiento;
-import dam.pmdm.bolaslocas.transiciones.Giro;
+import dam.pmdm.bolaslocas.scenes.info.Info;
+import dam.pmdm.bolaslocas.scenes.game.Game;
+import dam.pmdm.bolaslocas.scenes.Start;
+import dam.pmdm.bolaslocas.scenes.Scores;
+import dam.pmdm.bolaslocas.transitions.Displacement;
+import dam.pmdm.bolaslocas.transitions.Rotation;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Escenario escenario;
+    private Stage stage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
                     decorView.setSystemUiVisibility(flags);
             });
         }
-        setContentView(escenario = new Escenario(this));
-        new Inicio(escenario, "inicio", true);
-        new Juego(escenario, "juego", false);
-        new Info(escenario, "info", false);
-        new Tiempos(escenario, "tiempos", false);
-        escenario.addTransicion("desplazamiento", new Desplazamiento(escenario, 500000000f));
-        escenario.addTransicion("giro", new Giro(escenario, 1500000000f));
+        setContentView(stage = new Stage(this));
+        new Start(stage, "inicio", true);
+        new Game(stage, "juego", false);
+        new Info(stage, "info", false);
+        new Scores(stage, "tiempos", false);
+        new Displacement(stage, "desplazamiento");
+        new Rotation(stage, "giro");
     }
 
     @Override
@@ -64,19 +63,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.i("ACTIVITY", "PAUSED");
-        escenario.detenerGameLoop();
+        stage.detenerGameLoop();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Toast.makeText(this, "SAVE INSTANCE", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Toast.makeText(this, "RESTORE INSTANCE", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       if (escenario.onBackPressed())
+       if (stage.onBackPressed())
            super.onBackPressed();
     }
 }
